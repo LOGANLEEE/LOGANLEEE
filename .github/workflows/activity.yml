@@ -14,10 +14,53 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - uses: jamesgeorge007/github-activity-readme@master
-        with:
-          COMMIT_MSG: "chore: update recent activity"
-          MAX_LINES: 8
-          FILTER_EVENTS: "PushEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,ReleaseEvent,CreateEvent,ForkEvent"
+      - name: Build activity list
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'EOF'
+          import json, re, urllib.request, os
+
+          req = urllib.request.Request(
+              "https://api.github.com/users/LOGANLEEE/events/public?per_page=30",
+              headers={"Authorization": f"Bearer {os.environ['GH_TOKEN']}"})
+          events = json.load(urllib.request.urlopen(req))
+
+          lines, seen = [], set()
+          for e in events:
+              repo = e["repo"]["name"]
+              t = e["type"]
+              if t == "PushEvent":
+                  n = len(e["payload"].get("commits", []))
+                  line = f"🔨 Pushed {n} commit(s) to [{repo}](https://github.com/{repo})"
+              elif t == "PullRequestEvent":
+                  pr = e["payload"]["pull_request"]
+                  line = f"💪 {e['payload']['action'].capitalize()} PR [#{pr['number']}]({pr['html_url']}) in [{repo}](https://github.com/{repo})"
+              elif t == "IssuesEvent":
+                  i = e["payload"]["issue"]
+                  line = f"❗ {e['payload']['action'].capitalize()} issue [#{i['number']}]({i['html_url']}) in [{repo}](https://github.com/{repo})"
+              elif t == "CreateEvent" and e["payload"].get("ref_type") == "repository":
+                  line = f"🎉 Created repository [{repo}](https://github.com/{repo})"
+              elif t == "ReleaseEvent":
+                  r = e["payload"]["release"]
+                  line = f"🚀 Released [{r['tag_name']}]({r['html_url']}) in [{repo}](https://github.com/{repo})"
+              else:
+                  continue
+              if line not in seen:
+                  seen.add(line)
+                  lines.append(f"- {line}")
+              if len(lines) >= 8:
+                  break
+
+          block = "<!--START_SECTION:activity-->\n" + "\n".join(lines) + "\n<!--END_SECTION:activity-->"
+          readme = open("README.md").read()
+          readme = re.sub(r"<!--START_SECTION:activity-->.*?<!--END_SECTION:activity-->", block, readme, flags=re.S)
+          open("README.md", "w").write(readme)
+          EOF
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --cached --quiet || git commit -m "chore: update recent activity"
+          git push
