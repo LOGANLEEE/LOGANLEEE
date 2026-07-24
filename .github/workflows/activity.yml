@@ -31,7 +31,7 @@ jobs:
               repo = e["repo"]["name"]
               t = e["type"]
               if t == "PushEvent":
-                  n = len(e["payload"].get("commits", []))
+                  n = e["payload"].get("size") or len(e["payload"].get("commits", []))
                   line = f"🔨 Pushed {n} commit(s) to [{repo}](https://github.com/{repo})"
               elif t == "PullRequestEvent":
                   pr = e["payload"]["pull_request"]
