@@ -5,7 +5,7 @@
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Source+Sans+Pro&size=22&vCenter=true&center=true&width=640&lines=Full-stack+engineer+building+blockchain+infrastructure.;Programming+is+%22Creation%22%2C+not+%22Manufacturing%22.)](https://git.io/typing-svg)
 
 <p>
- <a href="https://www.linkedin.com/in/logan-lee-798344166/">
+ <a href="https://www.linkedin.com/in/logan-l-798344166/">
   <img alt="LinkedIn" title="Connect with me on LinkedIn" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
  </a>
  <a href="https://github.com/loganleee">
