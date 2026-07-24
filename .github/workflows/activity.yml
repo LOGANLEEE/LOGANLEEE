@@ -18,5 +18,6 @@ jobs:
         with:
           COMMIT_MSG: "chore: update recent activity"
           MAX_LINES: 8
+          FILTER_EVENTS: "PushEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,ReleaseEvent,CreateEvent,ForkEvent"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
