@@ -65,8 +65,11 @@
 ## ⚡ Recent Activity
 
 <!--START_SECTION:activity-->
+- 🔨 Pushed to `main` in [LOGANLEEE/danyeowa](https://github.com/LOGANLEEE/danyeowa)
+- 🔨 Pushed to `fix/the-board-disappears-in-dark-mode` in [LOGANLEEE/danyeowa](https://github.com/LOGANLEEE/danyeowa)
+- 🔨 Pushed to `fix/day-card-says-where-she-sleeps` in [LOGANLEEE/danyeowa](https://github.com/LOGANLEEE/danyeowa)
+- 🔨 Pushed to `fix/audit-targets-contrast-focus` in [LOGANLEEE/danyeowa](https://github.com/LOGANLEEE/danyeowa)
 - 🔨 Pushed to `main` in [LOGANLEEE/LOGANLEEE](https://github.com/LOGANLEEE/LOGANLEEE)
-- 🔨 Pushed to `main` in [LOGANLEEE/claude-whiteboard](https://github.com/LOGANLEEE/claude-whiteboard)
 <!--END_SECTION:activity-->
 
 <div align="center">
